@@ -1,0 +1,40 @@
+
+<template>
+    <div class="home page">
+        <app-banner></app-banner>
+        <home-movie-box
+            v-for = "type in types"
+            :key = " type.id "
+            :type = "type"
+        
+        ></home-movie-box>
+    </div>
+</template>
+
+<script>
+import AppBanner from './Banner'
+import HomeMovieBox from './MovieBox'
+export default {
+  name: 'Home',
+  data(){
+      return{
+          types:[
+              {id:1,url_type:"now-playing",title:'热映',count:5},
+              {id:2, url_type: 'coming-soon', title:　'即将上映', count: 3}
+          ]
+      }
+  },
+  components:{
+      AppBanner,HomeMovieBox
+    }
+ 
+}
+</script>
+
+<style lang="scss">
+    .home {
+        height: 2000px;
+    }
+</style>
+
+
