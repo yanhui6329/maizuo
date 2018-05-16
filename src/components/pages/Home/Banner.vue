@@ -5,7 +5,7 @@
                 v-for = " banner in banners "
                 :key  = " banner.id "
             >
-                <img width="100%" :src="banner.imageUrl" alt="">
+                <img class="swiper-lazy" width="100%" :data-src="banner.imageUrl" alt="">
             </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-//background-size:100%;background-image:url(//static.m.maizuo.com/v4/static/app/asset/1598cc489be15707b86e501996a81c6d.png);
+
 import Swiper from 'swiper'
 import '../../../../node_modules/swiper/dist/css/swiper.min.css'
 
@@ -36,7 +36,7 @@ export default {
                     pagination: {
                         el: '.swiper-pagination'
                     },
-                    autoplay:true,
+                    lazy: true
                 })
             })
         })

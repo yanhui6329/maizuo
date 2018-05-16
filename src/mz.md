@@ -70,3 +70,109 @@ import Vue from 'vue'
 bus.$on('事件名称',执行逻辑)
 事件触发调用bus.$emit('事件名称')
 
+9.实现Films里的电影类型切换
+Films - type- changeType -- > Film-nav
+Films - type -> FilmsBox(watch监听)
+
+
+
+#####使用vue组件插件，mint-ui  网址：mint-ui.github.io
+1.完整引入
+在main.js中写入
+import Vue from 'vue'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+import App from './App.vue'
+
+Vue.use(MintUI)
+
+new Vue({
+  el: '#app',
+  components: { App }
+})
+
+2.按需引入(不需要引样式)
+借助 babel-plugin-component，我们可以只引入需要的组件，以达到减小项目体积的目的。
+
+首先，安装 babel-plugin-component：
+
+npm install babel-plugin-component -D
+
+3.如果你只希望引入部分组件，比如 Button 和 Cell，那么需要在 main.js 中写入以下内容：
+
+import Vue from 'vue'
+import { Button, Cell } from 'mint-ui'
+import App from './App.vue'
+
+Vue.component(Button.name, Button)
+Vue.component(Cell.name, Cell)
+/* 或写为
+ * Vue.use(Button)
+ * Vue.use(Cell)
+ */
+
+new Vue({
+  el: '#app',
+  components: { App }
+})
+
+9. 实现Films里的电影类型切换
+
+    Films - type -changeType > Film-nav
+    Films - type -> FilmsBox(watch)
+
+    使用了mint-ui里面的infiniteScroll，来实现滚动到底部后进行新的请求，需要注意的是，当切换类型之后，要还原数据
+
+    使用Toast 实现加载弹出效果
+
+
+    懒加载：swiper中的图片延迟加载：需要将图片img标签的src改写成data-src，并且增加类名swiper-lazy。在banner.vue中应用
+    
+10 .应用<router-link tag="div" :to="{name:'detail',params:{id:film.id},query:{name:film.name}}"></router-link>跳转
+    点击进详情
+    设置详情页，配置详情页路由，采用路由传参的方式，将电影的id传入到detail中，detail根据获取的id将对应的电影信息渲染
+
+    就需要在路由表中设置detail页的路由为
+    {path:'/detail/:id',name:'detail',component:Detail,props:true}
+    路由跳转的时候要将id参数传进去，：to设置成json 设置params:{id:film.id}
+    电影的名字也传进去用query：{name:film.name},使用： 
+    switch (to.name) {
+            case 'films': title = '电影列表';break;
+            case 'not-found': title = '404';break;
+            // case 'detail': title = to.query.name;break;
+        }
+    接收，最简单的方式是在路由表中设置属性props：true,然后在Detail组件中通过props:['id']接收
+
+    接下来就去找接口获取信息，在方法中this.$http.get('/anhao/v4/api/film'+this.id,{params:{__t:Date.now()}})，
+```
+注意：详情页中films{}数据一开始没有，获取不到数据加载不出来，在div中添加v-if指令，有信息后再加载 eg v-if="film.name"
+
+````
+
+    11. 实现了顶部header中title的更新
+
+    (最好在vuex中更改数据)
+    分析：希望在路由切换的时候更改title，要用到路由钩子，写在哪，获取到数据就可以
+    可以用created(){
+      router.beforeEach((to, from ,next) => {
+            console.log(to)
+            let title = '卖座电影'
+            switch (to.name) {
+                case 'films': title = '电影列表';break;
+                case 'not-found': title = '404';break;
+                // case 'detail': title = to.query.name;break;
+            }
+            this.title = title
+            this.closeNav()
+            next()
+        })
+    }钩子函数,to属性是跳转的当前页信息,有name路径
+
+    在header的生命周期函数中，写入路由钩子，监听路由变化从而更改title
+
+    在详情页中，进入详情后，再去动态的更改header的title：
+    
+    1.让detail路由接收电影名字的参数，这样的话我们在路由钩子就能得到这个电影的名字，直接更改
+
+    2. 在header给eventbus绑定事件以更改title，在详情detail中进入之后在生命周期钩子或者是获取到电影名字后触发小天使的事件从而更改header的title（非父子组件的通信）
+    

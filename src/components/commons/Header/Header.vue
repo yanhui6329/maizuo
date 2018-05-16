@@ -6,7 +6,8 @@
                 <div @click = " isNavShow = !isNavShow" class="title-icon">
                     <i class="fa fa-navicon"></i>
                 </div>
-                <div class="title">卖座电影</div>
+                <!--头部标题  希望在路由切换的时候把title改掉  用到路由钩子-->
+                <div class="title">{{title}}</div>
             </div>
             <div class="right">
                 <div class="city">北京</div>
@@ -15,7 +16,7 @@
                 </div>
             </div>
         </nav>
- 
+
         
         <nav-list 
         :close-nav = "closeNav" 
@@ -28,34 +29,46 @@
 </template>
 
 <script>
-import router from '../../../router'
-import NavList from './NavList'
 // import bus from '../../../modules/bus'
+
+import router from '../../../router'
+import bus from '../../../modules/bus'
+import NavList from './NavList'
 export default {
   name: 'AppHeader',
   data () {
       return {
-          isNavShow: false
+          isNavShow: false,
+          //<!--头部信息更改 挂载一条数据 初始化-->
+          title: '卖座电影'
       }
   },
-//   created(){//在能获取到数据的时候可以绑定事件
-//         bus.$on('close-nav',this.closeNav)
-//   },
-
-    created(){
-        router.beforeEach((to,from,next)=>{
-            this.closeNav()//箭头函数没有this，this指header组件
-            next()
-        })
-    },
-    methods: {
-        closeNav () {
-            this.isNavShow = false
-        }  
-    },
-    components: {
-        NavList
-    }
+  created () {
+  	//切换路由关闭导航
+    //   bus.$on('close-nav',this.closeNav)
+    router.beforeEach((to, from ,next) => {
+    	//console.log(to)
+        let title = '卖座电影'
+        switch (to.name) {
+            case 'films': title = '电影列表';break;
+            case 'not-found': title = '404';break;
+            // case 'detail': title = to.query.name;break;
+        }
+        this.title = title
+        this.closeNav()
+        next()
+    })
+	//事件总线实现非父组件之间的通信
+    bus.$on('change-title',(title)=>{this.title = title})
+  },
+  methods: {
+    closeNav () {
+        this.isNavShow = false
+    }  
+  },
+  components: {
+      NavList
+  }
 }
 </script>
 
@@ -104,7 +117,7 @@ export default {
                     color: #efefef;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    display: inline-block;
+                    displdday: inline-block;
                     overflow: hidden;
             }
             

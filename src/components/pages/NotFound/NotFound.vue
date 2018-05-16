@@ -1,22 +1,28 @@
 <template>
-    <div class="not-found page">
-        <article class="not-found-view">
+  <div class="not-found page">
+        <article class="not-found-view" >
             <div class="img-background img-box">
-                <img width="100%" src="/static/images/not-found.jpg" alt="">
+                <img width="100%" src="/static/images/not-found.jpg" alt="" >
             </div>
-            <p>这个页面，神秘失踪了...</p>
-            <p><span>不如</span> <router-link to ="/home" >返回卖座电影首页</router-link><span>吧</span></p>
+            
+            <p >这个页面，神秘失踪了…</p>
+            <p >
+                <span >不如</span>
+                <router-link to ="/home" >返回卖座电影首页</router-link>
+                <span >吧</span>
+            </p>
         </article>
-    </div>
+  </div>
 </template>
+
 <script>
 export default {
-    name:'NotFound'
+  name: 'NotFound'
 }
 </script>
-<style lang="scss" scoped>
 
-.not-found {
+<style lang="scss" scoped>
+    .not-found {
         article {
             padding-top: 48px;
             display: flex;

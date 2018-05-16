@@ -1,32 +1,35 @@
-import Vue from 'vue';
+
+// 先去下载vue-router全局插件  
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import bus from '../modules/bus'
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-
-import Home from '../components/pages/Home/Home';
-import Films from '../components/pages/Films/Films';
-import NotFound from '../components/pages/NotFound/NotFound'
+import Home from '../components/pages/Home/Home.vue'
+import Films from '../components/pages/Films/Films.vue'
+import Mine from '../components/pages/Mine/Mine.vue'
+import Detail from '../components/pages/Detail/Detail.vue'
+import NotFound from '../components/pages/NotFound/NotFound.vue'
 
 
 const router = new VueRouter({
-    mode:"history",
-    routes:[
-        {path:'',redirect:'/home'},
-        {path:'/home',name:'home',component:Home},
-        {path:'/films',name:'films',component:Films},
-        {path:'/not-found',name:'not-found',component:NotFound},
-        {path:'**',redirect:'/not-found'}
-
-     ]
+    routes: [
+        {path: '', redirect: '/home'},
+        {path: '/home', name: 'home', component: Home},
+        {path: '/films', name: 'films', component: Films},
+        {path: '/mine', name: 'mine', component: Mine},
+        {path: '/detail/:id', name: 'detail', component: Detail, props: true},
+        {path: '/not-found', name: 'not-found', component: NotFound},
+        {path: '**', redirect: '/not-found'}
+    ]
 })
 
-//全局路由钩子，只要路由跳转就更改Header的isNavShow
-// router.beforeEach((to,from,next)=>{
+// import bus from '../modules/bus'
 
+// router.beforeEach((to, from, next) => {
+//     //更改Header的isNavShow
 //     bus.$emit('close-nav')
 //     next()
 // })
 
-export default router;
+export default router

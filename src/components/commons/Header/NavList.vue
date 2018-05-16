@@ -1,17 +1,17 @@
 <template>
-  <div :style="{height: (isNavShow?'100vh':'0px')}"  class="nav-list">
+  <div  class="nav-list">
         <transition
             enter-active-class="animated slideInLeft"
             leave-active-class="animated slideOutLeft"
         >
             <nav  v-if = "isNavShow" class="nav-group">
                 <ul>
-                    <li 
-                        @click="closeNav"
+                    <li  
+                        @click = "closeNav"                     
                         v-for = " nav in navs "
                         :key = " nav.id "
                     >
-                        <router-link tag="a" :to= "nav.name">
+                        <router-link :to = "{name: nav.name}">
                             {{ nav.title }}
                             <i class="fa fa-angle-right"></i>
                         </router-link>
@@ -36,9 +36,9 @@ export default {
   data () {
       return {
           navs: [
-              {id: 1, title: '首页',name:'home'},
-              {id: 2, title: '影院',name:'films'},
-             
+              {id: 1, title: '首页', name: 'home'},
+              {id: 2, title: '影片', name: 'films'},
+              {id: 3, title: '我的', name: 'mine'}
           ]
       }
   }
@@ -50,9 +50,9 @@ export default {
     position: fixed;
     left: 0;right: 0;top:0;
     z-index: 998;
-    height: 100vh;
     .mask {
         z-index: 9;
+        height: 100vh;
     }
 
     .animated {
@@ -73,7 +73,7 @@ export default {
         transition: all ease 0.4s;
         -webkit-transition: all ease 0.4s;
         z-index: 10;
-
+        height: 100vh;
         li {
             height: 50px;
 

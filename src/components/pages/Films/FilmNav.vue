@@ -1,29 +1,31 @@
 <template>
-    <div class="film-nav">
-            <div 
-                v-for= "nav in navs"
-                :key="nav.id"
-               :class = "{active:type === nav.type}"
-                class="nav"
-                 @click = "changeType(nav.type)"
-            >{{nav.title}}</div>
-    </div>
+  <div class="film-nav">
+      <div 
+        v-for = "nav in navs"
+        :key = "nav.id"
+        class = "nav"
+        :class = "{active:type === nav.type}"
+        @click = "changeType(nav.type)"
+      >{{nav.title}}</div>
+
+  </div>
 </template>
+
 <script>
 export default {
-    name:'FilmNav',
-    props:['type','changeType'],
-    data(){
-        return{
-            navs:[
-                {id:1,title:'正在热映',type:'now-playing'},
-                {id:2,title:'即将上映',type:'coming-soon'},
-
-            ]
-        }
-    }
+  name: 'FilmNav',
+  props: ['type', 'changeType'],
+  data () {
+      return {
+          navs: [
+              {id: 1, title: '正在热映', type: 'now-playing'},
+              {id: 2, title: '即将上映', type: 'coming-soon'}
+          ]
+      }
+  }
 }
 </script>
+
 <style lang="scss" scoped>
     .film-nav{
         height: 46px;
@@ -47,3 +49,5 @@ export default {
         }
     }
 </style>
+
+

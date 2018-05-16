@@ -2,6 +2,7 @@
   <div id="app">
     
     <app-header></app-header>
+    
     <router-view></router-view>
     
   </div>
@@ -12,9 +13,9 @@ import AppHeader from './components/commons/Header/Header'
 
 
 export default {
-   name: 'App',
-   components: {
-    AppHeader
+  name: 'App',
+  components: {
+   AppHeader
   }
 }
 </script>

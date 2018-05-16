@@ -1,22 +1,31 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
-
 //rem
 import './modules/rem'
 
+//filters :premiere
+import './modules/filter'
+
+
 //animate.css
 import 'animate.css'
-
-//router
-import router from './router';
 
 //引入全局scss文件
 //在webpack中有一个特性，一切皆模块，在这里，webpack检测到scss文件之后会编译之后再将其拿出去的
 import './stylesheets/main.scss';
 
-//filter
-import './modules/filter' 
+
+//element-ui
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// Vue.use(ElementUI)
+
+//mint-ui
+import { Lazyload, InfiniteScroll  } from 'mint-ui';
+Vue.use(Lazyload);
+Vue.use(InfiniteScroll);
+
 
 import Vue from 'vue'
 import App from './App'
@@ -28,6 +37,9 @@ Vue.config.productionTip = false
 import axios from 'axios'
 Vue.prototype.$http = axios
 
+
+// router
+import router from './router'
 
 /* eslint-disable no-new */
 new Vue({
