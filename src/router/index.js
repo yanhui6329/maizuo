@@ -9,6 +9,8 @@ import Home from '../components/pages/Home/Home.vue'
 import Films from '../components/pages/Films/Films.vue'
 import Mine from '../components/pages/Mine/Mine.vue'
 import Detail from '../components/pages/Detail/Detail.vue'
+import Goods from '../components/pages/Goods/Goods.vue'
+import Cart from '../components/pages/Cart/Cart.vue'
 import NotFound from '../components/pages/NotFound/NotFound.vue'
 
 
@@ -20,6 +22,8 @@ const router = new VueRouter({
         {path: '/mine', name: 'mine', component: Mine},
         {path: '/detail/:id', name: 'detail', component: Detail, props: true},
         {path: '/not-found', name: 'not-found', component: NotFound},
+        {path: '/goods', name: 'goods', component: Goods},
+        {path: '/cart', name: 'cart', component: Cart},
         {path: '**', redirect: '/not-found'}
     ]
 })

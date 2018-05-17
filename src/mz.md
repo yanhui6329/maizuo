@@ -148,8 +148,7 @@ new Vue({
 注意：详情页中films{}数据一开始没有，获取不到数据加载不出来，在div中添加v-if指令，有信息后再加载 eg v-if="film.name"
 
 ````
-
-    11. 实现了顶部header中title的更新
+11. 实现了顶部header中title的更新
 
     (最好在vuex中更改数据)
     分析：希望在路由切换的时候更改title，要用到路由钩子，写在哪，获取到数据就可以
@@ -176,3 +175,23 @@ new Vue({
 
     2. 在header给eventbus绑定事件以更改title，在详情detail中进入之后在生命周期钩子或者是获取到电影名字后触发小天使的事件从而更改header的title（非父子组件的通信）
     
+
+12.如果给组件传参组件不用props接收，类名就会添加到最外层元素上，查看元素style
+13.监听滚动条，控制回到顶部的显示隐藏
+//监听滚动条控制显示隐藏，可以在BackTop.Vue 组件mounted钩子函数中监听，mounted(){window.scroll=function(){}}但是不便于复用,像很多项目中头部在滚动到某一位置显示，所以封装独立出来，自定义指令。自定义指令一般都是全局的
+
+
+一开始我们准备封装一个backTop的组件，但是一想，这些组件可能在其他的项目都能用得着，所以就封装了自定义组件库
+    
+    核心：注意Vue.use其实是在调用传入的对象的install方法，我们在install方法中去注册组件库中的组件
+
+    backTop组件封装好之后开始使用，准备写逻辑（监听window的scroll，到达某一个值的时候控制一个元素显示隐藏，其实就是控制一条数据变成true和false），本来可以直接在该组件的created等钩子函数里给window绑定事件就可以了，但是一想，这个逻辑在很多地方都可能会用到，于是准备封装成了全局的指令：v-scroll-hide 接收的值是一条数据，在指令内部就可以更改这条数据，还通过设置一个自定义的属性scroll-hide-distance来指定控制数据的阈值（阙值、阀值）
+
+    在这个v-scroll-hide指令中，bind（window永远存在，绑定一次就好）里我们给window绑定事件监听（因为当组件被销毁的时候需要将事件监听程序去删掉），在unbind里取消绑定，距离通过el.getAttribute拿来，判断之后，更改数据的方式是：
+        //vnode.context就是使用指令的元素所处的组件，binding.expression是数据的表达式
+        vnode.context[binding.expression] = true/false
+
+
+    又做了一个指令v-back-top，这个指令无论是谁加上就可以触发事件来回到顶部
+
+    接收参数来动作事件的类型

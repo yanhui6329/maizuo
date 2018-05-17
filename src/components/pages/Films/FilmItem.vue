@@ -24,12 +24,7 @@
                 </div>
                 <div class="grade">{{film.grade}}</div>
             </template>
-            
-
-
-            
-            
-            
+       
       </div>
   </router-link>
 </template>

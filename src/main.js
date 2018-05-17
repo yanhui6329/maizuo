@@ -21,17 +21,31 @@ import './stylesheets/main.scss';
 // import 'element-ui/lib/theme-chalk/index.css';
 // Vue.use(ElementUI)
 
+
+//directives
+import './modules/directive'
+
+
+
 //mint-ui
-import { Lazyload, InfiniteScroll  } from 'mint-ui';
+import { Lazyload, InfiniteScroll,Button  } from 'mint-ui';
 Vue.use(Lazyload);
 Vue.use(InfiniteScroll);
+Vue.component('mz-button',Button);
 
+
+//自定义组件库
+import MZUI from './mz-ui'
+import './mz-ui/stylesheets/main.scss'
+Vue.use(MZUI)
 
 import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
 
+//vuex
+import store from './store'
 
 //处理axios，让组件通过this.$http来使用
 import axios from 'axios'
@@ -46,6 +60,7 @@ new Vue({
   el: '#app',
   components: { App },
   router,
+  store,
   //相当于将el直接替换成app组件
   template: '<App/>'
 })

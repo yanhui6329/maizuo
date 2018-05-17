@@ -11,7 +11,7 @@
             </div>
             <div class="right">
                 <div class="city">北京</div>
-                <div class="user">
+                <div class="user" v-back-top:touchstart>
                     <i class="fa fa-user-o"></i>
                 </div>
             </div>
