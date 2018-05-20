@@ -20,6 +20,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions(['addGoodInCar']),
         getGoods(){
            this.$http.get('./static/json/goods.json').then(res=>{
                this.goods = res.data;
